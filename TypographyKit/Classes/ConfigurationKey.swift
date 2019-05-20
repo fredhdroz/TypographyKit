@@ -9,6 +9,8 @@
 enum ConfigurationKey: String {
     case fontName = "font-name"
     case pointSize = "point-size"
+    case minPointSize = "minimum-point-size"
+    case maxPointSize = "maximum-point-size"
     case textColor = "text-color"
     case letterCase = "letter-case"
 }

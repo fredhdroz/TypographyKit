@@ -69,6 +69,9 @@ extension ParsingService {
             for (fontTextStyleKey, fontTextStyle) in fontTextStyles {
                 let fontName = fontTextStyle[ConfigurationKey.fontName.rawValue] as? String
                 let pointSize = fontTextStyle[ConfigurationKey.pointSize.rawValue] as? Float
+                let minPointSize = fontTextStyle[ConfigurationKey.minPointSize.rawValue] as? Float
+                let maxPointSize = fontTextStyle[ConfigurationKey.maxPointSize.rawValue] as? Float
+
                 var textColor: UIColor?
                 if let textColorName = fontTextStyle[ConfigurationKey.textColor.rawValue] as? String {
                     if let color = typographyColors[textColorName] {
@@ -82,6 +85,7 @@ extension ParsingService {
                     letterCase = LetterCase(rawValue: letterCaseName)
                 }
                 typographyStyles[fontTextStyleKey] = Typography(fontName: fontName, fontSize: pointSize,
+                                                                minFontSize: minPointSize, maxFontSize: maxPointSize,
                                                                 letterCase: letterCase, textColor: textColor)
             }
         }

@@ -9,6 +9,8 @@
 public struct Typography {
     public let fontName: String?
     public let pointSize: Float? // base point size for font
+    public let minPointSize: Float? // base point size for font
+    public let maxPointSize: Float? // base point size for font
     public var letterCase: LetterCase?
     public var textColor: UIColor?
     private static let contentSizeCategoryMap: [UIContentSizeCategory: Float] = [
@@ -30,6 +32,8 @@ public struct Typography {
         if let typographyStyle = TypographyKit.fontTextStyles[textStyle.rawValue] {
             fontName = typographyStyle.fontName
             pointSize = typographyStyle.pointSize
+            minPointSize = typographyStyle.minPointSize
+            maxPointSize = typographyStyle.maxPointSize
             letterCase = typographyStyle.letterCase
             textColor = typographyStyle.textColor
         } else {
@@ -39,10 +43,14 @@ public struct Typography {
 
     public init(fontName: String? = nil,
                 fontSize: Float? = nil,
+                minFontSize: Float? = nil,
+                maxFontSize: Float? = nil,
                 letterCase: LetterCase? = nil,
                 textColor: UIColor? = nil) {
         self.fontName = fontName
         self.pointSize = fontSize
+        self.minPointSize = minFontSize
+        self.maxPointSize = maxFontSize
         self.letterCase = letterCase
         self.textColor = textColor
     }
@@ -56,11 +64,17 @@ public struct Typography {
         pointSize += (TypographyKit.pointStepSize
             * contentSizeCategoryStepMultiplier
             * TypographyKit.pointStepMultiplier)
-        if let minimumPointSize = TypographyKit.minimumPointSize, pointSize < minimumPointSize {
+        
+        if let minimumPointSize = self.minPointSize, pointSize < minimumPointSize {
             pointSize = minimumPointSize
+        } else if let globalMinimumPointSize = TypographyKit.minimumPointSize, pointSize < globalMinimumPointSize {
+            pointSize = globalMinimumPointSize
         }
-        if let maximumPointSize = TypographyKit.maximumPointSize, maximumPointSize < pointSize {
+        
+        if let maximumPointSize = self.maxPointSize, maximumPointSize < pointSize {
             pointSize = maximumPointSize
+        } else if let globalMaximumPointSize = TypographyKit.maximumPointSize, globalMaximumPointSize < pointSize {
+            pointSize = globalMaximumPointSize
         }
         return UIFont(name: fontName, size: CGFloat(pointSize))
     }

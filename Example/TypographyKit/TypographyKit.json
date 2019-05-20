@@ -14,7 +14,9 @@
 	"ui-font-text-styles": {
 		"heading": {
 			"font-name": "Avenir-Medium",
+            "minimum-point-size": 32,
 			"point-size": 36,
+            "maximum-point-size": 40,
 			"text-color": "text",
 			"letter-case": "regular"
 		},
